@@ -8,11 +8,78 @@
   </head>
   <body>
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
+        <h1>Nikita Jindal</h1>
+        <h2> Background </h2>
+        <p> 
+          Welcome to my Portfolio page! My name is Nikita Jindal and I am rising junior at Harvard University 
+          studying Computer Science and Statistics with a Language Citation in Hindi-Urdu.
+          I love to learn and to express myself creatively in all kinds of ways :) 
+        </p>
+
+        <h2> Independent Projects </h2> 
+        <h3> Muse </h3>
+        <p> Music training website that utilizes the Spotify API to allow teachers to create 
+            quizzes that test a student’s ability to detect meter, recognize key, and replicate 
+            tempo through keystrokes. Technologies: Spotify API, SQL, Python, Flask, JavaScript, JQuery
+        </p>
+        <h2> Work Experience </h2>
+        <h3> Compare Asia Group Software Engineering Intern </h3>
+        <p>   
+            CompareAsiaGroup (CAG) is a financial technology startup based in Southeast Asia 
+            that seeks to financially empower individuals via a financial management platform. 
+            During my two month internship, I worked on the following projects.
+        </p> 
+        <ul class="cag-list">
+            <li> 
+                <h3> SMS Gateway </h3>
+                <p> Developed an Sms-gateway which enables CAG Marketing to send text messages to 
+                    clients with incomplete financial applications. Implemented the gateway via JHipster, 
+                    a scaffolding tool which offers an integration of SpringBoot, Swagger, Postgresql, Maven, 
+                    and React. The gateway leverages the Twilio API to send sms's and listen for responses via
+                     a webhook. If the user responds with certain key words, the webhook triggers an api call 
+                     which searches the database for the appropriate unsubscribe urls and makes a rest call to 
+                     an internal microservice to alter the user's subscribe status. 
+                </p>
+            </li>
+            <li> 
+                <h3> FB Messenger Chatbot </h3>
+                <p> Developed an MVP Facebook Messenger chatbot which utilizes the Wit.ai NLP engine and the 
+                    Botkit.ai framework to interact with clients purchasing personal loans in Malaysia. 
+                    Crafted a flow where the chatbot can sift through qualified leads based on personal loan 
+                    history and capture the client's personal information for future contact. Additionally, 
+                    recorded a demo of the MVP which marks the first demo to be uploaded to the new CAG Youtube 
+                    Channel, an initiative aimed at increasing visibility of projects within the company. 
+                </p>
+            </li>
+            <li> 
+                <h3> IMDB React App </h3>
+                <p> Redesigned CAG's front-end developer interview process by building a two-page react node 
+                    application which uses React hooks and styled components to simulate the IMDB movie interface 
+                    via their TMDB api. Thereby, optimized the interview process for time efficiency such that 
+                    prospective candidates can implement a single additional feature as opposed to building the 
+                    web app from scratch as a gating task in there interview process. 
+                </p> 
+            </li>
+            <li> 
+                <h3> Partner Portal </h3>
+                <p>  Implemented login functionality for the Partner Portal, a digital platform that manages user access to highly secure PII for both internal CAG members and external providers. Through Okta's OAuth 2.0 authorization server and related OIDC provider, enabled multi-factor authentication and implemented the authorization code PKCE grant flow. Developed the POC for the Partner Portal using the Fuse-React template which was then integrated with Jhipster. 
+                </p>
+            </li>
+        </ul>
+        <h2> Photo Gallery </h2>
+        <a href="gallery.html"><img src="images/Headshot.JPG"/></a>
+
+        <h2> Hobbies and Hidden Talents </h2>
+        <a href="hobbies.html#podcast">Podcast</a>
+        <a href="hobbies.html#dance">Dance</a>
+        <a href="hobbies.html#percussion">Percussion</a>
+        <a href="hobbies.html#htr">Harvard Technology Review</a>
+        <a href="hobbies.html#reading_group">Reading Group</a>
+
+      <!-- <p>This is Nikita Jindal's portfolio.</p>
       <p>Click here to get a random message:</p>
       <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+      <div id="greeting-container"></div> -->
     </div>
   </body>
 </html>
