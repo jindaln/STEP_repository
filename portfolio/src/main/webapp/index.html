@@ -11,13 +11,16 @@
     <div class="content-wrap">
         <h1>Nikita Jindal</h1>
         <button onclick="addRandomGreeting()">Click for Greeting</button>
+        <!-- Adding empty div to display the response of the addRandomGreeting() function -->
         <div id="greeting-container"></div>
+
         <h2>Background</h2>
         <p> Welcome to my Portfolio page! My name is Nikita Jindal and I am rising junior at Harvard University 
           studying Computer Science and Statistics with a Language Citation in Hindi-Urdu. This past academic year, I studied both the 
           CS121/124 series on Theoretical Computer Science and Data Structures and Algorithms as well as the 
           Stat 110/111 series on Probability and Statistical Inference. With this foundation, I'm excited to dive
           deeper into classes on Systems and Artificial Intelligence this upcoming semester!</p>
+
         <p> Outside of class, I love to learn and to express myself creatively in all kinds of ways! I grew up as a musician
             and a dancer, and these days I like to explore different aspects of music through sound editing/mixing for podcasts
             and the like. In my downtime, I enjoy reading short stories, memoirs, and poetry in Hindi and Urdu as well as research papers on various
@@ -25,20 +28,23 @@
             own articulation of ideas and to their stories of how they reached where they are. On a lighter note, 
             I find it fun to cook and bake with my family and try out random new recipes. I also enjoy taking hikes in
             Colorado under the beautiful sunshine while listening to music or talking to a friend.  </p>
+
         <h2>Independent Projects</h2> 
         <h3>Muse</h3>
         <p> Music training website that utilizes the Spotify API to allow teachers to create 
             quizzes that test a student’s ability to detect meter, recognize key, and replicate 
             tempo through keystrokes. Technologies: Spotify API, SQL, Python, Flask, JavaScript, JQuery</p>
+
         <h2>Work Experience</h2>
         <h3>Compare Asia Group Software Engineering Intern</h3>
         <p>CompareAsiaGroup (CAG) is a financial technology startup based in Southeast Asia 
             that seeks to financially empower individuals via a financial management platform. 
             During my two month internship, I worked on the following projects.</p> 
+
         <ul class="cag-list">
             <li> 
                 <h3>SMS Gateway</h3>
-                <p> Developed an Sms-gateway which enables CAG Marketing to send text messages to 
+                <p> Developed an SMS-gateway which enables CAG Marketing to send text messages to 
                     clients with incomplete financial applications. Implemented the gateway via JHipster, 
                     a scaffolding tool which offers an integration of SpringBoot, Swagger, Postgresql, Maven, 
                     and React. The gateway leverages the Twilio API to send sms's and listen for responses via
@@ -72,9 +78,18 @@
                     template which was then integrated with Jhipster.</p>
             </li>
         </ul>
+
         <section class='center'>
             <h2>Photo Gallery</h2>
-            <a href="gallery.html"><img src="images/Headshot.JPG"/></a>
+            <div class="container">
+                <img class="image" src="images/Headshot.JPG"/>
+                <a href="gallery.html">
+                    <div class="overlay">
+                        <div class="text">Click Here for More Images :)</div>
+                    </div>
+                </a>
+            </div>
+            
             <h2>Hobbies and Hidden Talents</h2>
             <ul> 
                 <li><a href="hobbies.html#podcast">Podcast</a></li>
@@ -84,11 +99,6 @@
                 <li><a href="hobbies.html#reading-group">Reading Group</a></li> 
             </ul>
         </section>
-
-      <!-- <p>This is Nikita Jindal's portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div> -->
     </div>
   </body>
 </html>
