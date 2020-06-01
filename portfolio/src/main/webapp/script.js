@@ -28,6 +28,21 @@ function addRandomGreeting() {
 }
 
 function getMessage(){
-    fetch('/data').then(response => response.text()).then((quote) => 
-    document.getElementById('quote-container').innerText = quote)
+    fetch('/data').then(response => response.json()).then((comments) => {
+        const commentsElement = document.getElementById('comments-container');
+        commentsElement.innerHTML = '';
+        commentsElement.appendChild(
+            createListElement('First Message: ' + comments[0]));
+        commentsElement.appendChild(
+            createListElement('Second Message: ' + comments[1]));
+        commentsElement.appendChild(
+            createListElement('Third Message: ' + comments[2]));
+    });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
