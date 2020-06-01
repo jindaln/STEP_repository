@@ -8,7 +8,7 @@
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.S
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
@@ -25,4 +25,9 @@ function addRandomGreeting() {
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
+}
+
+function getMessage(){
+    fetch('/data').then(response => response.text()).then((quote) => 
+    document.getElementById('quote-container').innerText = quote)
 }
