@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -26,22 +27,33 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    ArrayList<String> comments; 
+    ArrayList<Comment> comments; 
 
     public DataServlet() {
-        this.comments = new ArrayList<String>();
-        this.comments.add("Message 1");
-        this.comments.add("Message 2");
-        this.comments.add("Message 3");
+        this.comments = new ArrayList<Comment>();
     }
  
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DataServlet dataServlet = new DataServlet();
-        System.out.println("These are the comments: " + dataServlet.comments);
         Gson gson = new Gson();
-        String json = gson.toJson(dataServlet.comments);
+        String json = gson.toJson(this.comments);
         response.setContentType("application/json;");
         response.getWriter().println(json);
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response){
+        String name = request.getParameter("name");
+        String comment = request.getParameter("comment");
+        this.addComment(name, comment);
+        try {
+            response.sendRedirect("/index.html");
+        } catch (IOException e) {
+            System.out.println("Could not redirect");
+        }
+    }
+
+    public void addComment(String name, String comment){
+        Comment new_comment = new Comment(name, comment);
+        this.comments.add(new_comment);
     }
 }

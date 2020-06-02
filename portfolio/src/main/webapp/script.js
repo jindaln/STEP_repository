@@ -28,15 +28,12 @@ function addRandomGreeting() {
 }
 
 function getMessage(){
-    fetch('/data').then(response => response.json()).then((comments) => {
-        const commentsElement = document.getElementById('comments-container');
-        commentsElement.innerHTML = '';
-        commentsElement.appendChild(
-            createListElement('First Message: ' + comments[0]));
-        commentsElement.appendChild(
-            createListElement('Second Message: ' + comments[1]));
-        commentsElement.appendChild(
-            createListElement('Third Message: ' + comments[2]));
+    fetch('/data').then(response => response.json()).then((history) => {
+        const historyEl = document.getElementById('history');
+        console.log("This is history: ", history);
+        history.forEach((object) => {
+            historyEl.appendChild(createListElement(object.name + " : " + object.comment));
+        });
     });
 }
 
@@ -45,4 +42,17 @@ function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
+}
+
+function validateForm() {
+  var name = document.forms["comments_form"]["name"].value;
+  var comment = document.forms["comments_form"]["comment"].value;
+  if (name == "") {
+    alert("Name must be filled out");
+    return false;
+  }
+  if (comment == "") {
+    alert("Comment must be filled out");
+    return false;
+  }
 }
