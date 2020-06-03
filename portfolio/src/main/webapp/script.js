@@ -30,10 +30,10 @@ function addRandomGreeting() {
 function getMessage(){
     var max_comment = document.getElementById("max_comments").value;
     fetch(`/list_comments?max_comments=${max_comment}`).then(response => response.json()).then((history) => {
-        const historyEl = document.getElementById('history');
-        historyEl.innerHTML= "";
+        const historyElement = document.getElementById('history');
+        historyElement.innerHTML= "";
         history.forEach((object) => {
-            historyEl.appendChild(createListElement(object.name + " : " + object.comment));
+            historyElement.appendChild(createListElement(object.name + " : " + object.comment));
         });
     });
 }
@@ -61,4 +61,5 @@ function validateForm() {
     alert("Comment must be filled out");
     return false;
   }
+  return true; 
 }

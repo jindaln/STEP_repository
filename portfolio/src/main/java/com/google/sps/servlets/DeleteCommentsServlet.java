@@ -22,14 +22,11 @@ public class DeleteCommentsServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     Query query = new Query("Comment");
-
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     for (Entity entity : results.asIterable()) {
         datastore.delete(entity.getKey());
     }
-
-    return;
   }
 }

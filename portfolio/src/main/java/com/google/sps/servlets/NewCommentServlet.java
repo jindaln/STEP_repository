@@ -11,16 +11,22 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/new_comment")
 public class NewCommentServlet extends HttpServlet{
 
+    private static final Logger logger = LogManager.getLogger("Errors");
+    private static final String NAME = "name";
+    private static final String COMMENT = "comment";
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response){
-        String name = request.getParameter("name");
-        String comment = request.getParameter("comment");
+        String name = request.getParameter(NAME);
+        String comment = request.getParameter(COMMENT);
 
         Entity taskEntity = new Entity("Comment");
         taskEntity.setProperty("name", name);
@@ -32,7 +38,7 @@ public class NewCommentServlet extends HttpServlet{
         try {
             response.sendRedirect("/index.html");
         } catch (IOException e) {
-            System.out.println("Could not redirect");
+            logger.error(e);
         }
     }
 }
