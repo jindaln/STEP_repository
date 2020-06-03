@@ -99,16 +99,26 @@
                 <li><a href="hobbies.html#reading-group">Reading Group</a></li> 
             </ul>
         </section>
-
+        
         <h2>Comments</h2>
+        <h4> How many comments would you like to see? </h4>
+        <select onchange="getMessage()" name="max_comments" id="max_comments">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
         <ul id="history"></ul>
-        <form name="comments_form" action="/data" method="POST" onsubmit="return validateForm()">
+        <h4> Want to add your own comment? </h4>
+        <form name="comments_form" action="/new_comment" method="POST" onsubmit="return validateForm()">
             <label for="name">Name:</label><br>
             <input type="text" id="name" name="name"><br>
             <label for="comment">Comment:</label><br>
             <input type="text" id="comment" name="comment"><br>
             <input type="submit"/>
         </form>
+        <h4> Don't wanna see comments? </h4>
+        <button onclick="deleteMessages()"> Delete </button>
     </div>
   </body>
 </html>

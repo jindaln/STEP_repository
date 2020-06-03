@@ -1,11 +1,13 @@
 package com.google.sps.data;
 
-
 public class Comment{
-    String name;
-    String comment;
 
-    public Comment(String name, String comment){
+    private long id;
+    private String name;
+    private String comment;
+
+    public Comment(long id, String name, String comment){
+        this.id = id;
         this.name = name;
         this.comment = comment;
     }
