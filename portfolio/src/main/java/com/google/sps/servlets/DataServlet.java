@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,10 +28,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    ArrayList<Comment> comments; 
+    List comments; 
 
     public DataServlet() {
-        this.comments = new ArrayList<Comment>();
+        this.comments = new ArrayList<>();
     }
  
     @Override
@@ -53,7 +54,7 @@ public class DataServlet extends HttpServlet {
     }
 
     public void addComment(String name, String comment){
-        Comment new_comment = new Comment(name, comment);
-        this.comments.add(new_comment);
+        Comment newComment = new Comment(name, comment);
+        this.comments.add(newComment);
     }
 }

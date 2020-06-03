@@ -1,9 +1,9 @@
 package com.google.sps.data;
 
-
 public class Comment{
-    String name;
-    String comment;
+    
+    private String name;
+    private String comment;
 
     public Comment(String name, String comment){
         this.name = name;
