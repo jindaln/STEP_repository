@@ -54,4 +54,5 @@ function validateForm() {
     alert("Comment must be filled out");
     return false;
   }
+  return true; 
 }

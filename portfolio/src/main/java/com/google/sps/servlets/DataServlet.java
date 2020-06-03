@@ -23,38 +23,43 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    List comments; 
-
-    public DataServlet() {
-        this.comments = new ArrayList<>();
-    }
+    private static final String NAME = "name";
+    private static final String COMMENT = "comment";
+    private static final Logger logger = LogManager.getLogger("Errors");
+    List<Comment> comments; 
  
     @Override
+    public void init(){
+        comments = new ArrayList<>(); 
+    }
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Gson gson = new Gson();
-        String json = gson.toJson(this.comments);
+        String json = gson.toJson(comments);
         response.setContentType("application/json;");
         response.getWriter().println(json);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response){
-        String name = request.getParameter("name");
-        String comment = request.getParameter("comment");
-        this.addComment(name, comment);
+        String name = request.getParameter(NAME);
+        String comment = request.getParameter(COMMENT);
+        addComment(name, comment);
         try {
             response.sendRedirect("/index.html");
         } catch (IOException e) {
-            System.out.println("Could not redirect");
+            logger.error("Could not redirect");
         }
     }
 
     public void addComment(String name, String comment){
         Comment newComment = new Comment(name, comment);
-        this.comments.add(newComment);
+        comments.add(newComment);
     }
 }
