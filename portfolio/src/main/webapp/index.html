@@ -108,6 +108,13 @@
             <option value="15">15</option>
             <option value="20">20</option>
         </select>
+        <select onchange="getMessage()" name="language" id="language">
+            <option value="en" selected>English</option>
+            <option value="hi">Hindi</option>
+            <option value="es">Spanish</option>
+            <option value="ar">Arabic</option>
+            <option value="zh">Chinese</option>
+        </select>
         <ul id="history"></ul>
         <h4> Want to add your own comment? </h4>
         <form name="comments_form" action="/new_comment" method="POST" onsubmit="return validateForm()">
