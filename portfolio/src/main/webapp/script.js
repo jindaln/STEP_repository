@@ -31,6 +31,7 @@ function getMessage(){
     var max_comment = document.getElementById("max_comments").value;
     var language = document.getElementById("language").value;
     fetch(`/list_comments?max_comments=${max_comment}&language=${language}`).then(response => response.json()).then((history) => {
+        console.log(history);
         const historyElement = document.getElementById('history');
         historyElement.innerHTML= "";
         history.forEach((object) => {

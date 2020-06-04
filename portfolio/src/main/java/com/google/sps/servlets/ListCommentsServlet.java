@@ -44,20 +44,18 @@ public class ListCommentsServlet extends HttpServlet{
             Translation translation_name =
             translate.translate(name, Translate.TranslateOption.targetLanguage(lang));
             name = translation_name.getTranslatedText();
-            System.out.println(name);
 
             String comment = (String) entity.getProperty(COMMENT);
             Translation translation_comment =
             translate.translate(comment, Translate.TranslateOption.targetLanguage(lang));
             comment = translation_comment.getTranslatedText();
-            System.out.println(comment);
 
             Comment newComment = new Comment(id, name, comment);
             comments.add(newComment);
         }
         Gson gson = new Gson();
         String json = gson.toJson(comments);
-        response.setContentType("application/json;");
+        response.setContentType("application/json; charset=utf-8");
         response.getWriter().println(json);
     }
 }
