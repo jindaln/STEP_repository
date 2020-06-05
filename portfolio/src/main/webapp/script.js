@@ -45,6 +45,18 @@ function deleteMessages(){
     fetch(request).then(getMessage());
 }
 
+function createMapSingapore() {
+  const map = new google.maps.Map(
+      document.getElementById('mapSG'),
+      {center: {lat: 1.283, lng: 103.845}, zoom: 16});
+}
+
+function createMapHongKong() {
+  const map = new google.maps.Map(
+      document.getElementById('mapHK'),
+      {center: {lat: 22.285, lng: 114.190}, zoom: 16});
+}
+
 /** Creates an <li> element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');

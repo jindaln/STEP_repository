@@ -3,11 +3,12 @@
   <head>
     <meta charset="TDF-8">
     <title>My Portfolio</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBstuIEgosdt30hw52bAw7vG1AqHXeWvfo"></script>
     <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Montserrat&family=Nunito+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getMessage()" class="home">
+  <body onload="getMessage(); createMapSingapore(); createMapHongKong()" class="home">
     <div class="content-wrap">
         <h1>Nikita Jindal</h1>
         <button onclick="addRandomGreeting()">Click for Greeting</button>
@@ -37,6 +38,16 @@
 
         <h2>Work Experience</h2>
         <h3>Compare Asia Group Software Engineering Intern</h3>
+        <section class="maps">
+            <div class="singapore">
+                <h4>Singapore Office</h4>
+                <div id="mapSG"></div>
+            </div>
+            <div class="hk">
+                <h4>Hong Kong Office</h4>
+                <div id="mapHK"></div>
+            </div>
+        </section>
         <p>CompareAsiaGroup (CAG) is a financial technology startup based in Southeast Asia 
             that seeks to financially empower individuals via a financial management platform. 
             During my two month internship, I worked on the following projects.</p> 
