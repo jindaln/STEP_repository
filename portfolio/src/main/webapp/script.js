@@ -46,34 +46,124 @@ function deleteMessages(){
 }
 
 function createMapSingapore() {
-  const map = new google.maps.Map(
-      document.getElementById('mapSG'),
-      {center: {lat: 1.283, lng: 103.845}, zoom: 16});
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+
+    var contentStringOffice = '<div class="Singapore"> <img src="/images/Singapore.jpg"> Singapore Office </div>';
+    var contentStringHome = '<div class="Singapore"> <img src="/images/SingHome.JPG"> Singapore Home </div>';
+
+    const SingHome = {lat: 1.334614, lng: 103.784676};
+    const Singapore = {lat: 1.283577, lng: 103.845012};
+    const map = new google.maps.Map(
+        document.getElementById('mapSG'),
+        {center: Singapore, zoom: 16});
+
+    directionsRenderer.setMap(map);
+
+    var infowindowOffice = new google.maps.InfoWindow({
+        content: contentStringOffice,
+        maxWidth: 200
+    });
+
+    var infowindowHome = new google.maps.InfoWindow({
+        content: contentStringHome,
+        maxWidth: 200
+    });
+
+    calcRoute(SingHome, Singapore, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
+
+    var markerOffice = new google.maps.Marker({position: Singapore, animation: 
+        google.maps.Animation.DROP, map: map});
+
+    var markerHome = new google.maps.Marker({position: SingHome, animation: 
+        google.maps.Animation.DROP, map: map});
+
+    markerOffice.addListener('click', function() {
+        infowindowOffice.open(map, markerOffice);
+    });
+
+    markerHome.addListener('click', function() {
+        infowindowHome.open(map, markerHome);
+    });
 }
 
 function createMapHongKong() {
-  const map = new google.maps.Map(
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+
+    var contentStringOffice = '<div class="HongKong"> <img src="/images/HongKong.JPG"> Hong Kong Office </div>';
+    var contentStringHotel = '<div class="HongKong"> <img src="/images/HKHotel.JPG"> Walking to HK Office from Hotel</div>';
+
+    const HKHotel = {lat: 22.287380, lng:114.192221 };
+    const HongKong = {lat: 22.285711, lng: 114.190767};
+    const map = new google.maps.Map(
       document.getElementById('mapHK'),
-      {center: {lat: 22.285, lng: 114.190}, zoom: 16});
+      {center: HongKong, zoom: 16});
+
+    directionsRenderer.setMap(map);
+
+    var infowindowOffice = new google.maps.InfoWindow({
+        content: contentStringOffice,
+        maxWidth: 200
+    });
+
+    var infowindowHotel = new google.maps.InfoWindow({
+        content: contentStringHotel,
+        maxWidth: 200
+    });
+
+    var markerOffice = new google.maps.Marker({position: HongKong, animation: 
+        google.maps.Animation.DROP, map: map});
+
+    var markerHotel = new google.maps.Marker({position: HKHotel, animation: 
+        google.maps.Animation.DROP, map: map});
+    
+    markerOffice.addListener('click', function() {
+        infowindowOffice.open(map, markerOffice);
+    });
+
+    markerHotel.addListener('click', function() {
+        infowindowHotel.open(map, markerHotel);
+    });
+
+    calcRoute(HKHotel, HongKong, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
+}
+
+function calcRoute(start, end, travel, directionsService, directionsRenderer) {
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: travel
+  };
+  console.log(request);
+  directionsService.route(request, function(result, status) {
+    if (status == 'OK') {
+        directionsRenderer.setDirections(result);
+        directionsRenderer.setOptions({suppressMarkers: true});
+    }
+    else{
+        console.log("ERROR");
+    }
+  });
 }
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+    const liElement = document.createElement('li');
+    liElement.innerText = text;
+    return liElement;
 }
 
 function validateForm() {
-  var name = document.forms["comments_form"]["name"].value;
-  var comment = document.forms["comments_form"]["comment"].value;
-  if (name == "") {
-    alert("Name must be filled out");
-    return false;
-  }
-  if (comment == "") {
-    alert("Comment must be filled out");
-    return false;
-  }
-  return true; 
+    var name = document.forms["comments_form"]["name"].value;
+    var comment = document.forms["comments_form"]["comment"].value;
+    if (name == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+    if (comment == "") {
+        alert("Comment must be filled out");
+        return false;
+    }
+    return true; 
 }

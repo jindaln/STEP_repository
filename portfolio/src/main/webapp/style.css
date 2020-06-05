@@ -78,6 +78,11 @@ ul{
   margin: auto
 }
 
+.Singapore img, .HongKong img{
+    width: 100%;
+    height: auto
+}
+
 #mapSG, #mapHK {
   border: thin solid black;
   height: 300px;
