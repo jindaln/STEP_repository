@@ -45,7 +45,7 @@ function deleteMessages(){
     fetch(request).then(getMessage());
 }
 
-/** Creates an <li> element containing text. */
+/** Creates / <li> / list element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
@@ -55,11 +55,11 @@ function createListElement(text) {
 function validateForm() {
   var name = document.forms["comments_form"]["name"].value;
   var comment = document.forms["comments_form"]["comment"].value;
-  if (name == "") {
+  if (!name) {
     alert("Name must be filled out");
     return false;
   }
-  if (comment == "") {
+  if (!comment) {
     alert("Comment must be filled out");
     return false;
   }
