@@ -101,8 +101,14 @@
         </section>
 
         <h2>Comments</h2>
-        <ul id="comments-container"></ul>
-        
+        <ul id="history"></ul>
+        <form name="comments_form" action="/data" method="POST" onsubmit="return validateForm()">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name"><br>
+            <label for="comment">Comment:</label><br>
+            <input type="text" id="comment" name="comment"><br>
+            <input type="submit"/>
+        </form>
     </div>
   </body>
 </html>

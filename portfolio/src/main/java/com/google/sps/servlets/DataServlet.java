@@ -14,28 +14,52 @@
 
 package com.google.sps.servlets;
 
+import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+
+    private static final String NAME = "name";
+    private static final String COMMENT = "comment";
+    private static final Logger logger = LogManager.getLogger("Errors");
+    List<Comment> comments; 
  
     @Override
+    public void init(){
+        comments = new ArrayList<>(); 
+    }
+
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ArrayList<String> comments = new ArrayList<String>(); 
-        comments.add("Message 1");
-        comments.add("Message 2");
-        comments.add("Message 3");
-        System.out.println("These are the comments: " + comments);
-        Gson gson = new Gson();
-        String json = gson.toJson(comments);
+        String json = new Gson().toJson(comments);
         response.setContentType("application/json;");
         response.getWriter().println(json);
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response){
+        String name = request.getParameter(NAME);
+        String comment = request.getParameter(COMMENT);
+        addComment(name, comment);
+        try {
+            response.sendRedirect("/index.html");
+        } catch (IOException e) {
+            logger.error("Could not redirect");
+        }
+    }
+
+    private void addComment(String name, String comment){
+        comments.add(new Comment(name, comment));
     }
 }
