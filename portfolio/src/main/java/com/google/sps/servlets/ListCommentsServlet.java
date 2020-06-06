@@ -18,15 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/list_comments")
 public class ListCommentsServlet extends HttpServlet{
-
     private static final String NAME = "name";
     private static final String COMMENT = "comment";
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         Query query = new Query("Comment");
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
         List<Entity> results = datastore.prepare(query).
             asList(FetchOptions.Builder.withLimit(
             Integer.parseInt(request.getParameter("max_comments"))));
@@ -36,12 +35,9 @@ public class ListCommentsServlet extends HttpServlet{
             long id = entity.getKey().getId();
             String name = (String) entity.getProperty(NAME);
             String comment = (String) entity.getProperty(COMMENT);
-
-            Comment newComment = new Comment(id, name, comment);
-            comments.add(newComment);
+            comments.add(new Comment(id, name, comment););
         }
-        Gson gson = new Gson();
-        String json = gson.toJson(comments);
+        String json = new Gson().toJson(comments);
         response.setContentType("application/json;");
         response.getWriter().println(json);
     }

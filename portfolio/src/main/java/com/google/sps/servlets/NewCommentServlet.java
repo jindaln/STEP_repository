@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/new_comment")
 public class NewCommentServlet extends HttpServlet{
-
     private static final Logger logger = LogManager.getLogger("Errors");
     private static final String NAME = "name";
     private static final String COMMENT = "comment";
