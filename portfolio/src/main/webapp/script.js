@@ -157,11 +157,11 @@ function createListElement(text) {
 function validateForm() {
     var name = document.forms["comments_form"]["name"].value;
     var comment = document.forms["comments_form"]["comment"].value;
-    if (name == "") {
+    if (!name) {
         alert("Name must be filled out");
         return false;
     }
-    if (comment == "") {
+    if (!comment) {
         alert("Comment must be filled out");
         return false;
     }
