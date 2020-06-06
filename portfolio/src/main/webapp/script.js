@@ -48,7 +48,6 @@ function deleteMessages(){
 function createMapSingapore() {
     var directionsService = new google.maps.DirectionsService();
     var directionsRenderer = new google.maps.DirectionsRenderer();
-
     var contentStringOffice = '<div class="Singapore"> <img src="/images/Singapore.jpg"> Singapore Office </div>';
     var contentStringHome = '<div class="Singapore"> <img src="/images/SingHome.JPG"> Singapore Home </div>';
 
@@ -59,38 +58,18 @@ function createMapSingapore() {
         {center: Singapore, zoom: 16});
 
     directionsRenderer.setMap(map);
-
-    var infowindowOffice = new google.maps.InfoWindow({
-        content: contentStringOffice,
-        maxWidth: 200
-    });
-
-    var infowindowHome = new google.maps.InfoWindow({
-        content: contentStringHome,
-        maxWidth: 200
-    });
-
+    var infowindowOffice = createInfoWindow(contentStringOffice);
+    var infowindowHome = createInfoWindow(contentStringHome);
+    var markerOffice = createMarker(Singapore, map);
+    var markerHome = createMarker(SingHome, map);
+    addListenerToMarker(markerOffice, infowindowOffice, map);
+    addListenerToMarker(markerHome, infowindowHome, map);
     calcRoute(SingHome, Singapore, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
-
-    var markerOffice = new google.maps.Marker({position: Singapore, animation: 
-        google.maps.Animation.DROP, map: map});
-
-    var markerHome = new google.maps.Marker({position: SingHome, animation: 
-        google.maps.Animation.DROP, map: map});
-
-    markerOffice.addListener('click', function() {
-        infowindowOffice.open(map, markerOffice);
-    });
-
-    markerHome.addListener('click', function() {
-        infowindowHome.open(map, markerHome);
-    });
 }
 
 function createMapHongKong() {
     var directionsService = new google.maps.DirectionsService();
     var directionsRenderer = new google.maps.DirectionsRenderer();
-
     var contentStringOffice = '<div class="HongKong"> <img src="/images/HongKong.JPG"> Hong Kong Office </div>';
     var contentStringHotel = '<div class="HongKong"> <img src="/images/HKHotel.JPG"> Walking to HK Office from Hotel</div>';
 
@@ -101,32 +80,31 @@ function createMapHongKong() {
       {center: HongKong, zoom: 16});
 
     directionsRenderer.setMap(map);
-
-    var infowindowOffice = new google.maps.InfoWindow({
-        content: contentStringOffice,
-        maxWidth: 200
-    });
-
-    var infowindowHotel = new google.maps.InfoWindow({
-        content: contentStringHotel,
-        maxWidth: 200
-    });
-
-    var markerOffice = new google.maps.Marker({position: HongKong, animation: 
-        google.maps.Animation.DROP, map: map});
-
-    var markerHotel = new google.maps.Marker({position: HKHotel, animation: 
-        google.maps.Animation.DROP, map: map});
-    
-    markerOffice.addListener('click', function() {
-        infowindowOffice.open(map, markerOffice);
-    });
-
-    markerHotel.addListener('click', function() {
-        infowindowHotel.open(map, markerHotel);
-    });
-
+    var infowindowOffice = createInfoWindow(contentStringOffice);
+    var infowindowHotel = createInfoWindow(contentStringHotel);
+    var markerOffice = createMarker(HongKong, map);
+    var markerHotel = createMarker(HKHotel, map);
+    addListenerToMarker(markerOffice, infowindowOffice, map);
+    addListenerToMarker(markerHotel, infowindowHotel, map);
     calcRoute(HKHotel, HongKong, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
+}
+
+function createInfoWindow(contentString){
+    return new google.maps.InfoWindow({
+        content: contentString,
+        maxWidth: 200
+    });
+}
+
+function createMarker(position, map){
+    return new google.maps.Marker({position: position, animation: 
+        google.maps.Animation.DROP, map: map});
+}
+
+function addListenerToMarker(marker, infoWindow, map){
+    marker.addListener('click', function() {
+        infoWindow.open(map, marker);
+    });
 }
 
 function calcRoute(start, end, travel, directionsService, directionsRenderer) {
