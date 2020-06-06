@@ -28,12 +28,19 @@ function addRandomGreeting() {
 }
 
 function getMessage(){
-    fetch('/data').then(response => response.json()).then((history) => {
+    var max_comment = document.getElementById("max_comments").value;
+    fetch(`/list_comments?max_comments=${max_comment}`).then(response => response.json()).then((history) => {
         const historyElement = document.getElementById('history');
+        historyElement.innerHTML= "";
         history.forEach((object) => {
             historyElement.appendChild(createListElement(object.name + " : " + object.comment));
         });
     });
+}
+
+function deleteMessages(){
+    const request = new Request("/delete-data", {method: 'POST'});
+    fetch(request).then(getMessage());
 }
 
 /** Creates / <li> / list element containing text. */
