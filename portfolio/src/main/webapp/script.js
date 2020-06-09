@@ -30,7 +30,8 @@ function addRandomGreeting() {
 function getMessage(){
     var max_comment = document.getElementById("max_comments").value;
     var language = document.getElementById("language").value;
-    fetch(`/list_comments?max_comments=${max_comment}&language=${language}`).then(response => response.json()).then((history) => {
+    fetch(`/list_comments?max_comments=${max_comment}&language=${language}`).
+    then(response => response.json()).then((history) => {
         console.log(history);
         const commentsElement = document.getElementById('comments');
         commentsElement.innerHTML= "";
@@ -39,7 +40,6 @@ function getMessage(){
         });
     });
 }
-
 
 /** Creates an <li> element containing text. */
 function createListElement(name, comment, imgUrl) {
