@@ -94,6 +94,7 @@ public class NewCommentServlet extends HttpServlet{
         try {
             URL url = new URL(imagesService.getServingUrl(options));
             System.out.println("This is url: " + url);
+            System.out.println("This is path: " + url.getPath());
             return url.getPath();
         } catch (MalformedURLException e) {
             return imagesService.getServingUrl(options);

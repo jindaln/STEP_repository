@@ -110,7 +110,6 @@
                 <li><a href="hobbies.html#reading-group">Reading Group</a></li> 
             </ul>
         </section>
-        
         <h2>Comments</h2>
         <h4> How many comments would you like to see? </h4>
         <select onchange="getMessage()" name="max_comments" id="max_comments">
@@ -126,7 +125,7 @@
             <option value="ar">Arabic</option>
             <option value="zh">Chinese</option>
         </select>
-        <ul id="history"></ul>
+        <section id="comments"></section><br>
         <h4> Want to add your own comment? </h4>
         <form id="comments_form" name="comments_form" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
             <label for="name">Name:</label><br>

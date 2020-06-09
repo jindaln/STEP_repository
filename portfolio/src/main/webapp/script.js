@@ -32,22 +32,29 @@ function getMessage(){
     var language = document.getElementById("language").value;
     fetch(`/list_comments?max_comments=${max_comment}&language=${language}`).then(response => response.json()).then((history) => {
         console.log(history);
-        const historyElement = document.getElementById('history');
-        historyElement.innerHTML= "";
+        const commentsElement = document.getElementById('comments');
+        commentsElement.innerHTML= "";
         history.forEach((object) => {
-            historyElement.appendChild(createListElement((object.name + " : " + object.comment), object.imageUrl));
+            commentsElement.appendChild(createListElement(object.name, object.comment, object.imageUrl));
         });
     });
 }
 
+
 /** Creates an <li> element containing text. */
-function createListElement(text, imgUrl) {
-    const liElement = document.createElement('li');
+function createListElement(name, comment, imgUrl) {
+    const divElement = document.createElement("div");
     const imgElement = document.createElement("img");
     imgElement.setAttribute("src", imgUrl);
-    liElement.innerText = text;
-    liElement.appendChild(imgElement);
-    return liElement;
+    imgElement.setAttribute("class", "floated");
+    const nameElement = document.createElement("p");
+    nameElement.innerText = name;
+    const commentElement = document.createElement("p");
+    commentElement.innerText = comment;
+    divElement.appendChild(imgElement);
+    divElement.appendChild(nameElement);
+    divElement.appendChild(commentElement);
+    return divElement;
 }
 
 function fetchBlobstoreUrlAndShowForm() {

@@ -4,12 +4,12 @@ public class Comment{
     private long id;
     private String name;
     private String comment;
-    private String imageUpload;
+    private String imageUrl;
 
-    public Comment(long id, String name, String comment, String imageUpload){
+    public Comment(long id, String name, String comment, String imageUrl){
         this.id = id;
         this.name = name;
         this.comment = comment;
-        this.imageUpload = imageUpload;
+        this.imageUrl = imageUrl;
     }
 }
