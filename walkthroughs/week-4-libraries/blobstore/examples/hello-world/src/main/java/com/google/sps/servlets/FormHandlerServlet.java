@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * When the user submits the form, Blobstore processes the file upload and then forwards the request
  * to this servlet. This servlet can then process the request using the file URL we get from
- * Blobstore.
+ * l
  */
 @WebServlet("/my-form-handler")
 public class FormHandlerServlet extends HttpServlet {

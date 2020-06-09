@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getMessage(); createMapSingapore(); createMapHongKong()" class="home">
+  <body onload="getMessage(); createMapSingapore(); createMapHongKong(); fetchBlobstoreUrlAndShowForm()" class="home">
     <div class="content-wrap">
         <h1>Nikita Jindal</h1>
         <button onclick="addRandomGreeting()">Click for Greeting</button>
@@ -128,11 +128,13 @@
         </select>
         <ul id="history"></ul>
         <h4> Want to add your own comment? </h4>
-        <form name="comments_form" action="/new_comment" method="POST" onsubmit="return validateForm()">
+        <form id="comments_form" name="comments_form" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
             <label for="name">Name:</label><br>
             <input type="text" id="name" name="name"><br>
             <label for="comment">Comment:</label><br>
             <input type="text" id="comment" name="comment"><br>
+            <label for="imageUpload">Upload Image: </label><br>
+            <input type="file" id="imageUpload" name="imageUpload"><br/>
             <input type="submit"/>
         </form>
         <h4> Don't wanna see comments? </h4>

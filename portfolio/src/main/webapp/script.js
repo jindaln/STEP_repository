@@ -35,9 +35,30 @@ function getMessage(){
         const historyElement = document.getElementById('history');
         historyElement.innerHTML= "";
         history.forEach((object) => {
-            historyElement.appendChild(createListElement(object.name + " : " + object.comment));
+            historyElement.appendChild(createListElement((object.name + " : " + object.comment), object.imageUrl));
         });
     });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text, imgUrl) {
+    const liElement = document.createElement('li');
+    const imgElement = document.createElement("img");
+    imgElement.setAttribute("src", imgUrl);
+    liElement.innerText = text;
+    liElement.appendChild(imgElement);
+    return liElement;
+}
+
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('comments_form');
+        messageForm.action = imageUploadUrl;
+      });
 }
 
 function deleteMessages(){
@@ -123,13 +144,6 @@ function calcRoute(start, end, travel, directionsService, directionsRenderer) {
         console.log("ERROR");
     }
   });
-}
-
-/** Creates an <li> element containing text. */
-function createListElement(text) {
-    const liElement = document.createElement('li');
-    liElement.innerText = text;
-    return liElement;
 }
 
 function validateForm() {
