@@ -32,6 +32,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.InterruptedException;
 
 /**
  * When the user submits the form, Blobstore processes the file upload and then forwards the request
@@ -89,9 +90,16 @@ public class FormHandlerServlet extends HttpServlet {
     // We could check the validity of the file here, e.g. to make sure it's an image file
     // https://stackoverflow.com/q/10779564/873165
 
+    try{
+        Thread.sleep(4000);
+    } catch (InterruptedException e){
+        e.printStackTrace();
+    }
+
     // Use ImagesService to get a URL that points to the uploaded file.
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+
 
     // To support running in Google Cloud Shell with AppEngine's devserver, we must use the relative
     // path to the image, rather than the path returned by imagesService which contains a host.
