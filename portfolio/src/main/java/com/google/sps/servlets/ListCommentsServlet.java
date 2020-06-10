@@ -15,9 +15,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-// import com.google.cloud.translate.Translate;
-// import com.google.cloud.translate.TranslateOptions;
-// import com.google.cloud.translate.Translation;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 
 @WebServlet("/list_comments")
 public class ListCommentsServlet extends HttpServlet{
@@ -28,7 +28,7 @@ public class ListCommentsServlet extends HttpServlet{
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Translate translate = TranslateOptions.getDefaultInstance().getService();
+        Translate translate = TranslateOptions.getDefaultInstance().getService();
         String lang = request.getParameter("language");
         Query query = new Query("Comment");
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -42,12 +42,12 @@ public class ListCommentsServlet extends HttpServlet{
             long id = entity.getKey().getId();
 
             String name = (String) entity.getProperty(NAME);
-            // name = translate.translate(name, Translate.TranslateOption.
-            //     targetLanguage(lang)).getTranslatedText();
+            name = translate.translate(name, Translate.TranslateOption.
+                targetLanguage(lang)).getTranslatedText();
 
             String comment = (String) entity.getProperty(COMMENT);
-            // comment = translate.translate(comment, Translate.TranslateOption.
-            //     targetLanguage(lang)).getTranslatedText();
+            comment = translate.translate(comment, Translate.TranslateOption.
+                targetLanguage(lang)).getTranslatedText();
 
             String imageUrl = (String) entity.getProperty(IMAGEURL);
             String email = (String) entity.getProperty(EMAIL);
