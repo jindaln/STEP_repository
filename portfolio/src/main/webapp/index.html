@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getMessage(); createMapSingapore(); createMapHongKong(); fetchBlobstoreUrlAndShowForm()" class="home">
+  <body onload="getMessage(); createMapSingapore(); createMapHongKong(); fetchBlobstoreUrlAndShowForm(); checkIfLoggedIn();" class="home">
     <div class="content-wrap">
         <h1>Nikita Jindal</h1>
         <button onclick="addRandomGreeting()">Click for Greeting</button>
@@ -137,8 +137,10 @@
             <input type="file" id="imageUpload" name="imageUpload"><br/>
             <input type="submit"/>
         </form>
+        <div id="loginLink"></div>
         <h4> Don't wanna see comments? </h4>
-        <button onclick="deleteMessages()"> Delete </button>
+        <button onclick="deleteMessages()"> Delete </button><br><br><br>
+        <div id="logoutLink"></div>
     </div>
   </body>
 </html>

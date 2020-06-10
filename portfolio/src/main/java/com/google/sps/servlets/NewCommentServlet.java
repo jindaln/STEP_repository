@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/new_comment")
@@ -39,14 +41,17 @@ public class NewCommentServlet extends HttpServlet{
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response){
+        UserService userService = UserServiceFactory.getUserService();
         String name = request.getParameter(NAME);
         String comment = request.getParameter(COMMENT);
+        String email = userService.getCurrentUser().getEmail();
         String imageUrl = getUploadedFileUrl(request, IMAGEUPLOAD);
 
         Entity taskEntity = new Entity("Comment");
         taskEntity.setProperty("name", name);
         taskEntity.setProperty("comment", comment);
         taskEntity.setProperty("imageUrl", imageUrl);
+        taskEntity.setProperty("email", email);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(taskEntity);
