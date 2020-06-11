@@ -25,22 +25,25 @@ import com.google.sps.Event;
 
 public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-        Event prevAttendedEvent = new Event("Start", TimeRange.fromStartEnd(0, 0, false), Collections.emptySet());
-        List <Event> eventList = new ArrayList<Event> (events);
-        Collections.sort(eventList, ORDER_BY_START);
+        System.out.println("THen end of the day is: " + TimeRange.END_OF_DAY);
+        long duration = request.getDuration();
+        Collection<String> optionalAttendees = request.getOptionalAttendees();
+        Collection<String> mandatoryAttendees = request.getAttendees();
+        Collection<String> allAttendees = new ArrayList<String>();
         Collection<TimeRange> meetingTimes = new ArrayList<TimeRange>();
-        for (Event event : eventList){
-            if (attendeesAtEvent(event, request.getAttendees())){
-                if (event.getWhen().overlaps(prevAttendedEvent.getWhen())){
-                    prevAttendedEvent = prevAttendedEvent.getWhen().end() < event.getWhen().end() ? event : prevAttendedEvent;
-                }
-                else{
-                    addMeetingTime(event.getWhen().start(), prevAttendedEvent.getWhen().end(), request.getDuration(), meetingTimes);
-                    prevAttendedEvent = event;
-                }
-            }
+        for (String attendee : mandatoryAttendees){
+            allAttendees.add(attendee);
         }
-        addMeetingTime(TimeRange.END_OF_DAY + 1, prevAttendedEvent.getWhen().end(), request.getDuration(), meetingTimes);
+        for (String attendee : optionalAttendees){
+            allAttendees.add(attendee);
+        }
+        if (mandatoryAttendees.isEmpty()){
+            meetingTimes = returnMeetingTimes(events, optionalAttendees, duration);
+        }
+        else{
+            meetingTimes = returnMeetingTimes(events, allAttendees, duration).isEmpty() ? 
+            returnMeetingTimes(events, mandatoryAttendees, duration) : returnMeetingTimes(events, allAttendees, duration);
+        }
         return (meetingTimes);
     }
 
@@ -57,7 +60,27 @@ public final class FindMeetingQuery {
         if(startNext - endPrevious >= duration){
             meetingTimes.add(TimeRange.fromStartEnd(endPrevious, startNext, false));
         }
-    }   
+    }
+
+    public Collection<TimeRange> returnMeetingTimes(Collection<Event> events, Collection<String> attendees, long duration) {
+        Event prevAttendedEvent = new Event("Start", TimeRange.fromStartEnd(0, 0, false), Collections.emptySet());
+        List<Event> eventList = new ArrayList<Event> (events);
+        Collections.sort(eventList, ORDER_BY_START);
+        Collection<TimeRange> meetingTimes = new ArrayList<TimeRange>();
+        for (Event event : eventList){
+            if (attendeesAtEvent(event, attendees)){
+                if (event.getWhen().overlaps(prevAttendedEvent.getWhen())){
+                    prevAttendedEvent = prevAttendedEvent.getWhen().end() < event.getWhen().end() ? event : prevAttendedEvent;
+                }
+                else{
+                    addMeetingTime(event.getWhen().start(), prevAttendedEvent.getWhen().end(), duration, meetingTimes);
+                    prevAttendedEvent = event;
+                }
+            }
+        }
+        addMeetingTime(TimeRange.END_OF_DAY + 1, prevAttendedEvent.getWhen().end(), duration, meetingTimes);
+        return (meetingTimes);
+    }
 
     public static final Comparator<Event> ORDER_BY_START = new Comparator<Event>() {
         @Override
