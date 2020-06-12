@@ -166,3 +166,10 @@ function validateForm() {
     }
     return true; 
 }
+
+function functionsOnLoad(){
+    getMessage(); 
+    createMapSingapore(); 
+    createMapHongKong(); 
+    fetchBlobstoreUrlAndShowForm();
+}
