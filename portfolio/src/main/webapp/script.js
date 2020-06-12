@@ -52,19 +52,19 @@ function createMapSingapore() {
     var contentStringHome = '<div class="Singapore"> <img src="/images/SingHome.JPG"> Singapore Home </div>';
 
     const SingHome = {lat: 1.334614, lng: 103.784676};
-    const Singapore = {lat: 1.283577, lng: 103.845012};
+    const SingOffice = {lat: 1.283577, lng: 103.845012};
     const map = new google.maps.Map(
         document.getElementById('mapSG'),
-        {center: Singapore, zoom: 16});
+        {center: SingOffice, zoom: 16});
 
     directionsRenderer.setMap(map);
     var infowindowOffice = createInfoWindow(contentStringOffice);
     var infowindowHome = createInfoWindow(contentStringHome);
-    var markerOffice = createMarker(Singapore, map);
+    var markerOffice = createMarker(SingOffice, map);
     var markerHome = createMarker(SingHome, map);
     addListenerToMarker(markerOffice, infowindowOffice, map);
     addListenerToMarker(markerHome, infowindowHome, map);
-    calcRoute(SingHome, Singapore, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
+    calcRoute(SingHome, SingOffice, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
 }
 
 function createMapHongKong() {
@@ -74,19 +74,19 @@ function createMapHongKong() {
     var contentStringHotel = '<div class="HongKong"> <img src="/images/HKHotel.JPG"> Walking to HK Office from Hotel</div>';
 
     const HKHotel = {lat: 22.287380, lng:114.192221 };
-    const HongKong = {lat: 22.285711, lng: 114.190767};
+    const HKOffice = {lat: 22.285711, lng: 114.190767};
     const map = new google.maps.Map(
       document.getElementById('mapHK'),
-      {center: HongKong, zoom: 16});
+      {center: HKOffice, zoom: 16});
 
     directionsRenderer.setMap(map);
     var infowindowOffice = createInfoWindow(contentStringOffice);
     var infowindowHotel = createInfoWindow(contentStringHotel);
-    var markerOffice = createMarker(HongKong, map);
+    var markerOffice = createMarker(HKOffice, map);
     var markerHotel = createMarker(HKHotel, map);
     addListenerToMarker(markerOffice, infowindowOffice, map);
     addListenerToMarker(markerHotel, infowindowHotel, map);
-    calcRoute(HKHotel, HongKong, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
+    calcRoute(HKHotel, HKOffice, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
 }
 
 function createInfoWindow(contentString){
@@ -125,11 +125,11 @@ function calcRoute(start, end, travel, directionsService, directionsRenderer) {
   });
 }
 
-/** Creates an <li> element containing text. */
+/** Creates an list <li> element containing text. */
 function createListElement(text) {
-    const liElement = document.createElement('li');
-    liElement.innerText = text;
-    return liElement;
+    const listElement = document.createElement('li');
+    listElement.innerText = text;
+    return listElement;
 }
 
 function validateForm() {
@@ -144,4 +144,10 @@ function validateForm() {
         return false;
     }
     return true; 
+}
+
+function functionsOnLoad(){
+    getMessage();
+    createMapSingapore();
+    createMapHongKong();
 }
