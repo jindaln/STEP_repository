@@ -1,9 +1,9 @@
 package com.google.sps.data;
 
 public class Login{
-    private boolean loggedIn;
-    private String loginUrl;
-    private String logoutUrl;
+    private final boolean loggedIn;
+    private final String loginUrl;
+    private final String logoutUrl;
 
     public Login(boolean loggedIn, String loginUrl, String logoutUrl){
         this.loggedIn = loggedIn;
