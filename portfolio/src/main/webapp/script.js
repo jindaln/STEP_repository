@@ -125,7 +125,7 @@ function calcRoute(start, end, travel, directionsService, directionsRenderer) {
   });
 }
 
-/** Creates an list <li> element containing text. */
+/** Creates / <li> / list element containing text. */
 function createListElement(text) {
     const listElement = document.createElement('li');
     listElement.innerText = text;

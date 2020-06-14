@@ -21,7 +21,6 @@ import com.google.cloud.translate.Translation;
 
 @WebServlet("/list_comments")
 public class ListCommentsServlet extends HttpServlet{
-
     private static final String NAME = "name";
     private static final String COMMENT = "comment";
 
