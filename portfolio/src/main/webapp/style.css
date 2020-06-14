@@ -78,6 +78,18 @@ ul{
   margin: auto
 }
 
+.Singapore img, .HongKong img{
+    width: 100%;
+    height: auto
+}
+
+#mapSG, #mapHK {
+  border: thin solid black;
+  height: 300px;
+  width: 300px;
+  margin-bottom: 10px;
+}
+
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_image_overlay_fade */
 .image {
   display: block;
@@ -160,3 +172,25 @@ ul{
         flex-basis: 40%; 
     } 
 } 
+
+@media only screen and (min-width:700px) { 
+    .maps{
+        display:grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 5px;
+    }
+
+    #mapSG, #mapHK {
+        border: thin solid black;
+        height: 300px;
+        width: 300px;
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (min-width:1050px) { 
+    #mapSG, #mapHK {
+        height: 400px;
+        width: 400px;
+    }
+}
