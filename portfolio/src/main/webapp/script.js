@@ -45,23 +45,109 @@ function deleteMessages(){
     fetch(request).then(getMessage());
 }
 
+function createMapSingapore() {
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+    var contentStringOffice = '<div class="Singapore"> <img src="/images/Singapore.jpg"> Singapore Office </div>';
+    var contentStringHome = '<div class="Singapore"> <img src="/images/SingHome.JPG"> Singapore Home </div>';
+
+    const SingHome = {lat: 1.334614, lng: 103.784676};
+    const SingOffice = {lat: 1.283577, lng: 103.845012};
+    const map = new google.maps.Map(
+        document.getElementById('mapSG'),
+        {center: SingOffice, zoom: 16});
+
+    directionsRenderer.setMap(map);
+    var infowindowOffice = createInfoWindow(contentStringOffice);
+    var infowindowHome = createInfoWindow(contentStringHome);
+    var markerOffice = createMarker(SingOffice, map);
+    var markerHome = createMarker(SingHome, map);
+    addListenerToMarker(markerOffice, infowindowOffice, map);
+    addListenerToMarker(markerHome, infowindowHome, map);
+    calcRoute(SingHome, SingOffice, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
+}
+
+function createMapHongKong() {
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+    var contentStringOffice = '<div class="HongKong"> <img src="/images/HongKong.JPG"> Hong Kong Office </div>';
+    var contentStringHotel = '<div class="HongKong"> <img src="/images/HKHotel.JPG"> Walking to HK Office from Hotel</div>';
+
+    const HKHotel = {lat: 22.287380, lng:114.192221 };
+    const HKOffice = {lat: 22.285711, lng: 114.190767};
+    const map = new google.maps.Map(
+      document.getElementById('mapHK'),
+      {center: HKOffice, zoom: 16});
+
+    directionsRenderer.setMap(map);
+    var infowindowOffice = createInfoWindow(contentStringOffice);
+    var infowindowHotel = createInfoWindow(contentStringHotel);
+    var markerOffice = createMarker(HKOffice, map);
+    var markerHotel = createMarker(HKHotel, map);
+    addListenerToMarker(markerOffice, infowindowOffice, map);
+    addListenerToMarker(markerHotel, infowindowHotel, map);
+    calcRoute(HKHotel, HKOffice, google.maps.TravelMode['WALKING'], directionsService, directionsRenderer);
+}
+
+function createInfoWindow(contentString){
+    return new google.maps.InfoWindow({
+        content: contentString,
+        maxWidth: 200
+    });
+}
+
+function createMarker(position, map){
+    return new google.maps.Marker({position: position, animation: 
+        google.maps.Animation.DROP, map: map});
+}
+
+function addListenerToMarker(marker, infoWindow, map){
+    marker.addListener('click', function() {
+        infoWindow.open(map, marker);
+    });
+}
+
+function calcRoute(start, end, travel, directionsService, directionsRenderer) {
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: travel
+  };
+  console.log(request);
+  directionsService.route(request, function(result, status) {
+    if (status == 'OK') {
+        directionsRenderer.setDirections(result);
+        directionsRenderer.setOptions({suppressMarkers: true});
+    }
+    else{
+        console.log("ERROR");
+    }
+  });
+}
+
 /** Creates / <li> / list element containing text. */
 function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+    const listElement = document.createElement('li');
+    listElement.innerText = text;
+    return listElement;
 }
 
 function validateForm() {
-  var name = document.forms["comments_form"]["name"].value;
-  var comment = document.forms["comments_form"]["comment"].value;
-  if (!name) {
-    alert("Name must be filled out");
-    return false;
-  }
-  if (!comment) {
-    alert("Comment must be filled out");
-    return false;
-  }
-  return true; 
+    var name = document.forms["comments_form"]["name"].value;
+    var comment = document.forms["comments_form"]["comment"].value;
+    if (!name) {
+        alert("Name must be filled out");
+        return false;
+    }
+    if (!comment) {
+        alert("Comment must be filled out");
+        return false;
+    }
+    return true; 
+}
+
+function functionsOnLoad(){
+    getMessage();
+    createMapSingapore();
+    createMapHongKong();
 }
