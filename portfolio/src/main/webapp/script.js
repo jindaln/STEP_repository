@@ -30,14 +30,42 @@ function addRandomGreeting() {
 function getMessage(){
     var max_comment = document.getElementById("max_comments").value;
     var language = document.getElementById("language").value;
-    fetch(`/list_comments?max_comments=${max_comment}&language=${language}`).then(response => response.json()).then((history) => {
+    fetch(`/list_comments?max_comments=${max_comment}&language=${language}`).
+    then(response => response.json()).then((history) => {
         console.log(history);
-        const historyElement = document.getElementById('history');
-        historyElement.innerHTML= "";
+        const commentsElement = document.getElementById('comments');
+        commentsElement.innerHTML= "";
         history.forEach((object) => {
-            historyElement.appendChild(createListElement(object.name + " : " + object.comment));
+            commentsElement.appendChild(createListElement(object.name, object.comment, object.imageUrl));
         });
     });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(name, comment, imgUrl) {
+    const divElement = document.createElement("div");
+    const imgElement = document.createElement("img");
+    imgElement.setAttribute("src", imgUrl);
+    imgElement.setAttribute("class", "floated");
+    const nameElement = document.createElement("p");
+    nameElement.innerText = name;
+    const commentElement = document.createElement("p");
+    commentElement.innerText = comment;
+    divElement.appendChild(imgElement);
+    divElement.appendChild(nameElement);
+    divElement.appendChild(commentElement);
+    return divElement;
+}
+
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('comments_form');
+        messageForm.action = imageUploadUrl;
+      });
 }
 
 function deleteMessages(){
@@ -125,13 +153,6 @@ function calcRoute(start, end, travel, directionsService, directionsRenderer) {
   });
 }
 
-/** Creates / <li> / list element containing text. */
-function createListElement(text) {
-    const listElement = document.createElement('li');
-    listElement.innerText = text;
-    return listElement;
-}
-
 function validateForm() {
     var name = document.forms["comments_form"]["name"].value;
     var comment = document.forms["comments_form"]["comment"].value;
@@ -147,7 +168,8 @@ function validateForm() {
 }
 
 function functionsOnLoad(){
-    getMessage();
-    createMapSingapore();
-    createMapHongKong();
+    getMessage(); 
+    createMapSingapore(); 
+    createMapHongKong(); 
+    fetchBlobstoreUrlAndShowForm();
 }
