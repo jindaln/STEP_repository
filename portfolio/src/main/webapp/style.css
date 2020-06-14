@@ -133,6 +133,11 @@ ul{
     width: 30%
 }
 
+#comments{
+    display: flex;
+    flex-direction: column;
+}
+
 /* https://www.geeksforgeeks.org/css-image-gallery/ */
 .gallery { 
     width:100%; 

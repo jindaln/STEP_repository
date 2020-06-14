@@ -23,6 +23,7 @@ import com.google.cloud.translate.Translation;
 public class ListCommentsServlet extends HttpServlet{
     private static final String NAME = "name";
     private static final String COMMENT = "comment";
+    private static final String IMAGE_URL = "imageUrl";
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -40,14 +41,18 @@ public class ListCommentsServlet extends HttpServlet{
             long id = entity.getKey().getId();
 
             String name = (String) entity.getProperty(NAME);
-            name = translate.translate(name, Translate.TranslateOption.
-                targetLanguage(lang)).getTranslatedText();
+            Translation translatedName =
+            translate.translate(name, Translate.TranslateOption.targetLanguage(lang));
+            name = translatedName.getTranslatedText();
 
             String comment = (String) entity.getProperty(COMMENT);
-            comment = translate.translate(comment, Translate.TranslateOption.
-                targetLanguage(lang)).getTranslatedText();
+            Translation translatedComment =
+            translate.translate(comment, Translate.TranslateOption.targetLanguage(lang));
+            comment = translatedComment.getTranslatedText();
 
-            comments.add(new Comment(id, name, comment));
+            String imageUrl = (String) entity.getProperty(IMAGE_URL);
+            
+            comments.add(new Comment(id, name, comment, imageUrl));
         }
         String json = new Gson().toJson(comments);
         response.setContentType("application/json; charset=utf-8");
