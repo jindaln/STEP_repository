@@ -37,7 +37,7 @@ public class NewCommentServlet extends HttpServlet{
     private static final Logger logger = LogManager.getLogger("Errors");
     private static final String NAME = "name";
     private static final String COMMENT = "comment";
-    private static final String IMAGEUPLOAD = "imageUpload";
+    private static final String IMAGE_UPLOAD = "imageUpload";
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response){
@@ -45,7 +45,7 @@ public class NewCommentServlet extends HttpServlet{
         String name = request.getParameter(NAME);
         String comment = request.getParameter(COMMENT);
         String email = userService.getCurrentUser().getEmail();
-        String imageUrl = getUploadedFileUrl(request, IMAGEUPLOAD);
+        String imageUrl = getUploadedFileUrl(request, IMAGE_UPLOAD);
 
         Entity taskEntity = new Entity("Comment");
         taskEntity.setProperty("name", name);
@@ -66,7 +66,6 @@ public class NewCommentServlet extends HttpServlet{
     private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
         BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
         Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
-        System.out.println(blobs);
         List<BlobKey> blobKeys = blobs.get(formInputElementName);
 
         // User submitted form without selecting a file, so we can't get a URL. (dev server)
@@ -87,14 +86,15 @@ public class NewCommentServlet extends HttpServlet{
         // Use ImagesService to get a URL that points to the uploaded file.
         ImagesService imagesService = ImagesServiceFactory.getImagesService();
         ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+        String servingUrl = imagesService.getServingUrl(options);
 
         // To support running in Google Cloud Shell with AppEngine's devserver, we must use the relative
         // path to the image, rather than the path returned by imagesService which contains a host.
         try {
-            URL url = new URL(imagesService.getServingUrl(options));
+            URL url = new URL(servingUrl);
             return url.getPath();
         } catch (MalformedURLException e) {
-            return imagesService.getServingUrl(options);
+            return servingUrl;
         }    
     }
 }
