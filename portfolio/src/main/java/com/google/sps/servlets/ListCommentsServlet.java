@@ -24,6 +24,7 @@ public class ListCommentsServlet extends HttpServlet{
     private static final String NAME = "name";
     private static final String COMMENT = "comment";
     private static final String IMAGE_URL = "imageUrl";
+    private static final String EMAIL = "email";
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -51,8 +52,10 @@ public class ListCommentsServlet extends HttpServlet{
             comment = translatedComment.getTranslatedText();
 
             String imageUrl = (String) entity.getProperty(IMAGE_URL);
+            String email = (String) entity.getProperty(EMAIL);
             
-            comments.add(new Comment(id, name, comment, imageUrl));
+            comments.add(new Comment(id, name, comment, imageUrl, email));
+
         }
         String json = new Gson().toJson(comments);
         response.setContentType("application/json; charset=utf-8");

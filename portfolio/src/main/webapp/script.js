@@ -36,19 +36,19 @@ function getMessage(){
         const commentsElement = document.getElementById('comments');
         commentsElement.innerHTML= "";
         history.forEach((object) => {
-            commentsElement.appendChild(createListElement(object.name, object.comment, object.imageUrl));
+            commentsElement.appendChild(createListElement(object.name, object.comment, object.imageUrl, object.email));
         });
     });
 }
 
 /** Creates an <li> element containing text. */
-function createListElement(name, comment, imgUrl) {
+function createListElement(name, comment, imgUrl, email) {
     const divElement = document.createElement("div");
     const imgElement = document.createElement("img");
     imgElement.setAttribute("src", imgUrl);
     imgElement.setAttribute("class", "floated");
     const nameElement = document.createElement("p");
-    nameElement.innerText = name;
+    nameElement.innerText = name + "(" + email + ")";
     const commentElement = document.createElement("p");
     commentElement.innerText = comment;
     divElement.appendChild(imgElement);
@@ -66,6 +66,23 @@ function fetchBlobstoreUrlAndShowForm() {
         const messageForm = document.getElementById('comments_form');
         messageForm.action = imageUploadUrl;
       });
+}
+
+function checkIfLoggedIn(){
+    fetch('/login').then(response => response.json()).then((login) => {
+        console.log(login);
+        console.log(login.loggedIn);
+        console.log(login.loginUrl);
+        document.getElementById("logoutLink").innerHTML = 
+        "<p>Logout <a href=\"" + login.logoutUrl + "\">here</a>.</p>";
+        if(login.loggedIn){
+            document.getElementById("comments_form").style.display = "block";
+        }
+        else{
+            document.getElementById("loginLink").innerHTML = 
+            "<p>Login <a href=\"" + login.loginUrl + "\">here</a>.</p>";
+        }
+    });
 }
 
 function deleteMessages(){
@@ -171,5 +188,6 @@ function functionsOnLoad(){
     getMessage(); 
     createMapSingapore(); 
     createMapHongKong(); 
-    fetchBlobstoreUrlAndShowForm();
+    fetchBlobstoreUrlAndShowForm(); 
+    checkIfLoggedIn();
 }
