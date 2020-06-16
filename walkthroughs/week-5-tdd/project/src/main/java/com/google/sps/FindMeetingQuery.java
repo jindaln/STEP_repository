@@ -23,6 +23,9 @@ import com.google.sps.TimeRange;
 import java.util.Comparator;
 import com.google.sps.Event;
 
+//The purpose of FindMeetingQuery is to find a time range such that all attendees required at
+//a particular meeting are available, which requires checking all known events and 
+//making sure the meeting request and other events don't overlap for any of the attendees. 
 public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         System.out.println("THen end of the day is: " + TimeRange.END_OF_DAY);
@@ -47,7 +50,7 @@ public final class FindMeetingQuery {
         return (meetingTimes);
     }
 
-    public boolean attendeesAtEvent(Event event, Collection<String> attendees){
+    private boolean attendeesAtEvent(Event event, Collection<String> attendees){
         for (String attendee : attendees){
             if (event.getAttendees().contains(attendee)){
                 return true;
@@ -56,13 +59,13 @@ public final class FindMeetingQuery {
         return false;
     }
 
-    public void addMeetingTime(int startNext, int endPrevious, long duration, Collection<TimeRange> meetingTimes){
+    private void addMeetingTime(int startNext, int endPrevious, long duration, Collection<TimeRange> meetingTimes){
         if(startNext - endPrevious >= duration){
             meetingTimes.add(TimeRange.fromStartEnd(endPrevious, startNext, false));
         }
     }
 
-    public Collection<TimeRange> returnMeetingTimes(Collection<Event> events, Collection<String> attendees, long duration) {
+    private Collection<TimeRange> returnMeetingTimes(Collection<Event> events, Collection<String> attendees, long duration) {
         Event prevAttendedEvent = new Event("Start", TimeRange.fromStartEnd(0, 0, false), Collections.emptySet());
         List<Event> eventList = new ArrayList<Event> (events);
         Collections.sort(eventList, ORDER_BY_START);
@@ -82,7 +85,7 @@ public final class FindMeetingQuery {
         return (meetingTimes);
     }
 
-    public static final Comparator<Event> ORDER_BY_START = new Comparator<Event>() {
+    private static final Comparator<Event> ORDER_BY_START = new Comparator<Event>() {
         @Override
         public int compare(Event a, Event b) {
             return Long.compare(a.getWhen().start(), b.getWhen().start());
