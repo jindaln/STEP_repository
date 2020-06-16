@@ -23,7 +23,7 @@ import com.google.cloud.translate.Translation;
 public class ListCommentsServlet extends HttpServlet{
     private static final String NAME = "name";
     private static final String COMMENT = "comment";
-    private static final String IMAGEURL = "imageUrl";
+    private static final String IMAGE_URL = "imageUrl";
     private static final String EMAIL = "email";
 
     @Override
@@ -42,17 +42,20 @@ public class ListCommentsServlet extends HttpServlet{
             long id = entity.getKey().getId();
 
             String name = (String) entity.getProperty(NAME);
-            name = translate.translate(name, Translate.TranslateOption.
-                targetLanguage(lang)).getTranslatedText();
+            Translation translatedName =
+            translate.translate(name, Translate.TranslateOption.targetLanguage(lang));
+            name = translatedName.getTranslatedText();
 
             String comment = (String) entity.getProperty(COMMENT);
-            comment = translate.translate(comment, Translate.TranslateOption.
-                targetLanguage(lang)).getTranslatedText();
+            Translation translatedComment =
+            translate.translate(comment, Translate.TranslateOption.targetLanguage(lang));
+            comment = translatedComment.getTranslatedText();
 
-            String imageUrl = (String) entity.getProperty(IMAGEURL);
+            String imageUrl = (String) entity.getProperty(IMAGE_URL);
             String email = (String) entity.getProperty(EMAIL);
-
+            
             comments.add(new Comment(id, name, comment, imageUrl, email));
+
         }
         String json = new Gson().toJson(comments);
         response.setContentType("application/json; charset=utf-8");
