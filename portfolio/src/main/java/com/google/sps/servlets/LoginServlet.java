@@ -32,12 +32,12 @@ public class LoginServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    PrintWriter out = response.getWriter();
+    PrintWriter writer = response.getWriter();
     UserService userService = UserServiceFactory.getUserService();
     String logoutUrl = userService.createLogoutURL("/index.html");
     String loginUrl = userService.createLoginURL("/index.html");
     Login login = userService.isUserLoggedIn() ? 
     new Login(true, "", logoutUrl) : new Login(false, loginUrl, logoutUrl);
-    out.println(new Gson().toJson(login));
+    writer.println(new Gson().toJson(login));
   }
 }

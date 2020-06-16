@@ -75,7 +75,7 @@ function checkIfLoggedIn(){
         console.log(login.loginUrl);
         document.getElementById("logoutLink").innerHTML = 
         "<p>Logout <a href=\"" + login.logoutUrl + "\">here</a>.</p>";
-        if(login.loggedIn === true){
+        if(login.loggedIn){
             document.getElementById("comments_form").style.display = "block";
         }
         else{
@@ -182,4 +182,12 @@ function validateForm() {
         return false;
     }
     return true; 
+}
+
+function functionsOnLoad(){
+    getMessage(); 
+    createMapSingapore(); 
+    createMapHongKong(); 
+    fetchBlobstoreUrlAndShowForm(); 
+    checkIfLoggedIn();
 }
