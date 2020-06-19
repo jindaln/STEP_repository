@@ -47,7 +47,7 @@ public final class FindMeetingQuery {
             meetingTimes = returnMeetingTimes(events, allAttendees, duration).isEmpty() ? 
             returnMeetingTimes(events, mandatoryAttendees, duration) : returnMeetingTimes(events, allAttendees, duration);
         }
-        return (meetingTimes);
+        return meetingTimes;
     }
 
     private boolean attendeesAtEvent(Event event, Collection<String> attendees){
@@ -82,7 +82,7 @@ public final class FindMeetingQuery {
             }
         }
         addMeetingTime(TimeRange.END_OF_DAY + 1, prevAttendedEvent.getWhen().end(), duration, meetingTimes);
-        return (meetingTimes);
+        return meetingTimes;
     }
 
     private static final Comparator<Event> ORDER_BY_START = new Comparator<Event>() {
